@@ -17,21 +17,21 @@ body {
 h1 {
     grid-area: title;
     margin: 10px;
-    border-radius: 50px;
+    border-radius: 40px;
     background-color: #333;
 }
 
 div.controls {
     grid-area: controls;
     margin: 10px;
-    border-radius: 50px;
+    border-radius: 40px;
     background-color: #333;
 }
 
 div.scene {
     grid-area: scene;
     margin: 10px;
-    border-radius: 50px;
+    border-radius: 40px;
     background-color: #333;
 }
 
@@ -43,11 +43,14 @@ canvas {
 form.settings {
     grid-area: settings;
     margin: 10px;
-    border-radius: 50px;
+    border-radius: 40px;
     background-color: #333;
     display: grid;
-    grid-template-areas: "title-settings" "scroll" "update";
-    grid-template-rows: 40px auto 40px;
+    grid-template-areas:
+        "title-settings"
+        "scroll"
+        "buttons";
+    grid-template-rows: 40px calc(calc(calc(var(--size) * 1vh) + 20px) - 100px) 40px;
 }
 
 h2 {
@@ -60,21 +63,43 @@ h2 {
 }
 
 div.scroll {
-    overflow: scroll;
-}
+    overflow: auto;
+    display: grid;
+    grid-row-gap: 10px;
+} 
 
 div.scroll::-webkit-scrollbar {
     display: none;
 }
 
+div.scroll-gradient {
+    background-image: linear-gradient(to bottom,
+    #333f 0%,
+    #333f 2%,
+    #3330 10%,
+    #3330 90%,
+    #333f 98%,
+    #333f 100%);
+  
+    height: calc(calc(calc(var(--size) * 1vh) + 20px) - 100px);
+    width: calc(100vw - calc(calc(calc(var(--size) * 1vh) * calc(16/9)) + 40px));
+    z-index:1;
+    position:absolute;
+    pointer-events: none;
+}
+
 div.setting {
-    margin: 0 10px 5px;
+    margin: 0 10px;
     width: calc(100% - 20px);
     height: 50px;
     display: grid;
     grid-template-areas: "label output" "slider slider";
     grid-template-rows: 20px 30px;
     grid-template-columns: auto auto;
+}
+
+div.blank {
+    height: 10px;
 }
 
 input.slider {
@@ -107,4 +132,85 @@ input.slider::-webkit-slider-thumb {
     background: #ccc;
     border-radius: 15px;
     cursor: pointer;
+}
+
+input.slider::-webkit-slider-thumb:hover {
+    -webkit-appearance: none;
+    width: 30px;
+    height: 30px;
+    background: #999;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+div.buttons {
+    display: grid;
+    grid-template-areas: "update cancel";
+    grid-template-columns: 1fr 1fr;
+}
+
+input.update {
+    grid-area: update;
+    border-bottom-left-radius: 40px;
+    border: none;
+    outline: none;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+input.cancel {
+    grid-area: cancel;
+    border-bottom-right-radius: 40px;
+    border: none;
+    outline: none;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+input.update:hover {
+    background-color: #ccc;
+}
+
+input.cancel:hover {
+    background-color: #ccc;
+}
+
+button.fullscreen {
+    display: block;
+    opacity: 0;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 20px 20px 40px 20px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button.fullscreen:hover {
+    opacity: 1;
+}
+
+button.exit-fullscreen {
+    display: none;
+    opacity: 0;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 20px 0 0;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button.exit-fullscreen:hover {
+    opacity: 1;
 }
